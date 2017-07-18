@@ -179,7 +179,7 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <h2>安装Hexo</h2>
+                <h3>安装Hexo</h3>
 <ul>
 <li>使用npm安装hexo，其中<code>${YOUR_GITHUB_ID}</code>为你的github的用户Id，只要创建的repository的名字为<code>${YOUR_GITHUB_ID}.github.io</code>，该repository就是你的GitHub Pages：</li>
 </ul>
@@ -187,7 +187,7 @@
 <ul>
 <li>浏览生成的blog页面：<code>http://localhost:4000</code></li>
 </ul>
-<h2>让Hexo支持发布到Github</h2>
+<h3>让Hexo支持发布到Github</h3>
 <ul>
 <li>安装 hexo-deployer-git 组件</li>
 </ul>
@@ -196,28 +196,28 @@
 <li>修改项目根目录下<code>_config.yml</code>文件的deploy设置</li>
 </ul>
 <p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ vi _config.yml</div><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repo: https://github.com/$&#123;YOUR_GITHUB_ID&#125;/$&#123;YOUR_GITHUB_ID&#125;.github.io</div></pre></td></tr></table></figure></p>
-<h2>在github上创建新的repository</h2>
+<h3>在github上创建新的repository</h3>
 <ul>
 <li>repository的名字必须为：<code>${YOUR_GITHUB_ID}.github.io</code></li>
 </ul>
-<h2>设置域名指向</h2>
+<h3>设置域名指向</h3>
 <ul>
 <li>在source目录下新建CNAME文件，解决域名指向的问题，例如我使用的域名是：<code>blog.cookeem.com</code></li>
 </ul>
 <p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ vi source/CNAME</div><div class="line">blog.cookeem.com</div></pre></td></tr></table></figure></p>
-<h2>在域名解析里边添加CNAME解析</h2>
+<h3>在域名解析里边添加CNAME解析</h3>
 <ul>
 <li>设置如下：</li>
 </ul>
 <blockquote>
-<p>记录类型：CNAME
-主机记录：blog.cookeem.com
-记录值：cookeem.github.io
-TTL：10分钟</p>
+<p>记录类型：CNAME</p>
+<p>主机记录：blog.cookeem.com</p>
+<p>记录值：cookeem.github.io</p>
+<p>TTL：10分钟</p>
 </blockquote>
-<h2>新建页面</h2>
+<h3>新建页面</h3>
 <p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ hexo new &quot;My New Post&quot;</div></pre></td></tr></table></figure></p>
-<h2>发布更新到GitHub</h2>
+<h3>发布更新到GitHub</h3>
 <ul>
 <li>
 <p>发布更新到GitHub
@@ -271,7 +271,7 @@ TTL：10分钟</p>
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">安装Hexo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">让Hexo支持发布到Github</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">在github上创建新的repository</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">设置域名指向</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">在域名解析里边添加CNAME解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">新建页面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">发布更新到GitHub</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">安装Hexo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">让Hexo支持发布到Github</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">在github上创建新的repository</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">设置域名指向</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">在域名解析里边添加CNAME解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">新建页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">发布更新到GitHub</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -419,7 +419,7 @@ TTL：10分钟</p>
 
 <!--fastClick.js -->
 <script>
-    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    async("/js/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })
