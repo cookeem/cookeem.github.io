@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        Hello World｜曾海剑的技术博客
+        使用Github Pages和Hexo构建你的个人博客｜曾海剑的技术博客
         
     </title>
 
-    <link rel="canonical" href="http://blog.cookeem.com/2017/07/17/hello-world/">
+    <link rel="canonical" href="http://blog.cookeem.com/2017/07/18/Github-pages-and-hexo-build-your-blog-system/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -143,23 +143,23 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>Hello World</h1>
+                    <h1>使用Github Pages和Hexo构建你的个人博客</h1>
                     
-                    <h2 class="subheading">hi, I&#39;m haojen ma</h2>
+                    <h2 class="subheading">Use Github Pages and Hexo build your personal blog system</h2>
                     
                     <span class="meta">
                          作者 Haijian.Zeng
                         <span>
-                          日期 2017-07-17
+                          日期 2017-07-18
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#Movies"
-                           title="Movies">Movies</a>
+                        <a class="tag" href="/tags/#github"
+                           title="github">github</a>
                         
-                        <a class="tag" href="/tags/#Life"
-                           title="Life">Life</a>
+                        <a class="tag" href="/tags/#hexo"
+                           title="hexo">hexo</a>
                         
                     </div>
                 </div>
@@ -168,7 +168,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            Hello World
+            使用Github Pages和Hexo构建你的个人博客
         </span>
     </div>
 </header>
@@ -179,32 +179,65 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2>Quick Start</h2>
-<h3>Create a new post</h3>
-<p>😂</p>
-<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure></p>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3>Run server</h3>
-<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure></p>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3>Generate static files</h3>
-<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure></p>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3>Deploy to remote sites</h3>
-<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure></p>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+                <h2>安装Hexo</h2>
+<ul>
+<li>使用npm安装hexo，其中<code>${YOUR_GITHUB_ID}</code>为你的github的用户Id，只要创建的repository的名字为<code>${YOUR_GITHUB_ID}.github.io</code>，该repository就是你的GitHub Pages：</li>
+</ul>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ npm install hexo-cli -g</div><div class="line">$ hexo init $&#123;YOUR_GITHUB_ID&#125;.github.io</div><div class="line">$ cd $&#123;YOUR_GITHUB_ID&#125;.github.io</div><div class="line">$ npm install</div><div class="line">$ hexo server</div><div class="line">INFO  Start processing</div><div class="line">INFO  Hexo is running at http://localhost:4000/. Press Ctrl+C to stop.</div></pre></td></tr></table></figure></p>
+<ul>
+<li>浏览生成的blog页面：<code>http://localhost:4000</code></li>
+</ul>
+<h2>让Hexo支持发布到Github</h2>
+<ul>
+<li>安装 hexo-deployer-git 组件</li>
+</ul>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ npm install hexo-deployer-git --save</div></pre></td></tr></table></figure></p>
+<ul>
+<li>修改项目根目录下<code>_config.yml</code>文件的deploy设置</li>
+</ul>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ vi _config.yml</div><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repo: https://github.com/$&#123;YOUR_GITHUB_ID&#125;/$&#123;YOUR_GITHUB_ID&#125;.github.io</div></pre></td></tr></table></figure></p>
+<h2>在github上创建新的repository</h2>
+<ul>
+<li>repository的名字必须为：<code>${YOUR_GITHUB_ID}.github.io</code></li>
+</ul>
+<h2>设置域名指向</h2>
+<ul>
+<li>在source目录下新建CNAME文件，解决域名指向的问题，例如我使用的域名是：<code>blog.cookeem.com</code></li>
+</ul>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ vi source/CNAME</div><div class="line">blog.cookeem.com</div></pre></td></tr></table></figure></p>
+<h2>在域名解析里边添加CNAME解析</h2>
+<ul>
+<li>设置如下：</li>
+</ul>
+<blockquote>
+<p>记录类型：CNAME
+主机记录：blog.cookeem.com
+记录值：cookeem.github.io
+TTL：10分钟</p>
+</blockquote>
+<h2>新建页面</h2>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ hexo new &quot;My New Post&quot;</div></pre></td></tr></table></figure></p>
+<h2>发布更新到GitHub</h2>
+<ul>
+<li>
+<p>发布更新到GitHub
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ hexo clean &amp;&amp; hexo deploy -g</div></pre></td></tr></table></figure></p>
+</li>
+<li>
+<p>访问你的域名进行验证：<code>http://blog.cookeem.com</code></p>
+</li>
+</ul>
 
                 <hr>
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2017/07/18/Mac-docker-shrink/" data-toggle="tooltip" data-placement="top"
-                           title="MacOSX下docker镜像文件压缩">&larr; Previous Post</a>
-                    </li>
                     
+                    <li class="next">
+                        <a href="/2017/07/18/Mac-docker-shrink/" data-toggle="tooltip" data-placement="top"
+                           title="MacOSX下docker镜像文件压缩">Next Post &rarr;</a>
+                    </li>
                     
                 </ul>
 
@@ -238,7 +271,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">安装Hexo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">让Hexo支持发布到Github</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">在github上创建新的repository</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">设置域名指向</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">在域名解析里边添加CNAME解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">新建页面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">发布更新到GitHub</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -260,11 +293,11 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#Movies"
-                           title="Movies">Movies</a>
+                        <a class="tag" href="/tags/#github"
+                           title="github">github</a>
                         
-                        <a class="tag" href="/tags/#Life"
-                           title="Life">Life</a>
+                        <a class="tag" href="/tags/#hexo"
+                           title="hexo">hexo</a>
                         
                     </div>
                 </section>
