@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        使用Github Pages和Hexo构建你的个人博客｜曾海剑的技术博客
+        CentOS firewalld 设置常用命令｜曾海剑的技术博客
         
     </title>
 
-    <link rel="canonical" href="http://blog.cookeem.com/2017/07/18/Github-pages-and-hexo-build-your-blog-system/">
+    <link rel="canonical" href="http://blog.cookeem.com/2017/07/18/CentOS7-firewalld-usage/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -126,13 +126,14 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="/images/header-img.png">
+<img class="wechat-title-img"
+     src="/images/post-default-img.jpg">
 
 
 <style>
     
     header.intro-header {
-        background-image: url('/images/header-img.png');
+        background-image: url('/images/post-default-img.jpg')
     }
 
     
@@ -143,9 +144,9 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>使用Github Pages和Hexo构建你的个人博客</h1>
+                    <h1>CentOS firewalld 设置常用命令</h1>
                     
-                    <h2 class="subheading">Use Github Pages and Hexo to build your personal blog system</h2>
+                    <h2 class="subheading">CentOS firewalld usage</h2>
                     
                     <span class="meta">
                          作者 Haijian.Zeng
@@ -155,11 +156,8 @@
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#github"
-                           title="github">github</a>
-                        
-                        <a class="tag" href="/tags/#hexo"
-                           title="hexo">hexo</a>
+                        <a class="tag" href="/tags/#centos"
+                           title="centos">centos</a>
                         
                     </div>
                 </div>
@@ -168,7 +166,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            使用Github Pages和Hexo构建你的个人博客
+            CentOS firewalld 设置常用命令
         </span>
     </div>
 </header>
@@ -179,69 +177,54 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <h3>安装Hexo</h3>
-<ul>
-<li>使用npm安装hexo，其中<code>${YOUR_GITHUB_ID}</code>为你的github的用户Id，只要创建的repository的名字为<code>${YOUR_GITHUB_ID}.github.io</code>，该repository就是你的GitHub Pages：</li>
+                <ul>
+<li>参考链接：<code>https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Security_Guide/sec-Using_Firewalls.html</code></li>
 </ul>
-<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ npm install hexo-cli -g</div><div class="line">$ hexo init $&#123;YOUR_GITHUB_ID&#125;.github.io</div><div class="line">$ cd $&#123;YOUR_GITHUB_ID&#125;.github.io</div><div class="line">$ npm install</div><div class="line">$ hexo server</div><div class="line">INFO  Start processing</div><div class="line">INFO  Hexo is running at http://localhost:4000/. Press Ctrl+C to stop.</div></pre></td></tr></table></figure></p>
+<h3>firewalld的启动关闭</h3>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ systemctl start firewalld</div><div class="line">$ systemctl stop firewalld</div></pre></td></tr></table></figure></p>
+<h3>firewalld的允许和禁止</h3>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ systemctl enable firewalld</div><div class="line">$ systemctl disable firewalld</div></pre></td></tr></table></figure></p>
+<h3>查看firewalld的zones</h3>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ firewall-cmd --list-all-zones</div><div class="line">...</div><div class="line">public (active)</div><div class="line">  target: default</div><div class="line">  icmp-block-inversion: no</div><div class="line">  interfaces: ens160</div><div class="line">  sources: </div><div class="line">  services: dhcpv6-client http https ssh</div><div class="line">  ports: 80/tcp 5000/tcp</div><div class="line">  protocols: </div><div class="line">  masquerade: no</div><div class="line">  forward-ports: </div><div class="line">  sourceports: </div><div class="line">  icmp-blocks: </div><div class="line">  rich rules: </div><div class="line">...</div></pre></td></tr></table></figure></p>
+<h3>获取默认zone，就是不设置zone参数默认对应的zone</h3>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ firewall-cmd --get-default-zone</div><div class="line">public</div></pre></td></tr></table></figure></p>
+<h3>获取当前活动的zones</h3>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ firewall-cmd --get-active-zones</div><div class="line">public</div><div class="line">  interfaces: ens160</div></pre></td></tr></table></figure></p>
+<h3>永久添加http端口到public zone</h3>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ firewall-cmd --permanent --zone=public --add-service=http</div></pre></td></tr></table></figure></p>
+<h3>永久删除http端口到public zone</h3>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ firewall-cmd --permanent --zone=public --remove-service=http</div></pre></td></tr></table></figure></p>
+<h3>永久添加8080端口到public zone</h3>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ firewall-cmd --permanent --zone=public --add-port=8080/tcp</div></pre></td></tr></table></figure></p>
+<h3>永久删除8080端口到public zone</h3>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ firewall-cmd --permanent --zone=public --remove-port=8080/tcp</div></pre></td></tr></table></figure></p>
+<h3>添加删除后记得reload</h3>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ firewall-cmd --reload</div></pre></td></tr></table></figure></p>
+<h3>查看配置结果</h3>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ firewall-cmd --list-all --zone=public</div><div class="line">public (active)</div><div class="line">  target: default</div><div class="line">  icmp-block-inversion: no</div><div class="line">  interfaces: ens160</div><div class="line">  sources: </div><div class="line">  services: dhcpv6-client http https ssh</div><div class="line">  ports: 80/tcp 5000/tcp</div><div class="line">  protocols: </div><div class="line">  masquerade: no</div><div class="line">  forward-ports: </div><div class="line">  sourceports: </div><div class="line">  icmp-blocks: </div><div class="line">  rich rules:</div></pre></td></tr></table></figure></p>
+<h3>获取firewalld开放的services以及端口</h3>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ firewall-cmd --list-all</div><div class="line">public (active)</div><div class="line">  target: default</div><div class="line">  icmp-block-inversion: no</div><div class="line">  interfaces: ens160</div><div class="line">  sources: </div><div class="line">  services: dhcpv6-client http https ssh</div><div class="line">  ports: 80/tcp 5000/tcp</div><div class="line">  protocols: </div><div class="line">  masquerade: no</div><div class="line">  forward-ports: </div><div class="line">  sourceports: </div><div class="line">  icmp-blocks: </div><div class="line">  rich rules:</div></pre></td></tr></table></figure></p>
+<h3>获取所有可用的zones</h3>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ firewall-cmd --get-zones</div><div class="line">work drop internal external trusted home dmz public block</div></pre></td></tr></table></figure></p>
+<h3>查看特定的zone状态</h3>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ firewall-cmd --zone=home --list-all</div><div class="line">home</div><div class="line">  target: default</div><div class="line">  icmp-block-inversion: no</div><div class="line">  interfaces: </div><div class="line">  sources: </div><div class="line">  services: dhcpv6-client mdns samba-client ssh</div><div class="line">  ports: </div><div class="line">  protocols: </div><div class="line">  masquerade: no</div><div class="line">  forward-ports: </div><div class="line">  sourceports: </div><div class="line">  icmp-blocks: </div><div class="line">  rich rules:</div></pre></td></tr></table></figure></p>
+<h3>查看firewalld默认支持的services</h3>
 <ul>
-<li>浏览生成的blog页面：<code>http://localhost:4000</code></li>
+<li>services的定义位于<code>/usr/lib/firewalld/services</code></li>
 </ul>
-<h3>让Hexo支持发布到Github</h3>
-<ul>
-<li>安装 hexo-deployer-git 组件</li>
-</ul>
-<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ npm install hexo-deployer-git --save</div></pre></td></tr></table></figure></p>
-<ul>
-<li>修改项目根目录下<code>_config.yml</code>文件的deploy设置</li>
-</ul>
-<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ vi _config.yml</div><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repo: https://github.com/$&#123;YOUR_GITHUB_ID&#125;/$&#123;YOUR_GITHUB_ID&#125;.github.io</div></pre></td></tr></table></figure></p>
-<h3>在github上创建新的repository</h3>
-<ul>
-<li>repository的名字必须为：<code>${YOUR_GITHUB_ID}.github.io</code></li>
-</ul>
-<h3>设置域名指向</h3>
-<ul>
-<li>在source目录下新建CNAME文件，解决域名指向的问题，例如我使用的域名是：<code>blog.cookeem.com</code></li>
-</ul>
-<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ vi source/CNAME</div><div class="line">blog.cookeem.com</div></pre></td></tr></table></figure></p>
-<h3>在域名解析里边添加CNAME解析</h3>
-<ul>
-<li>设置如下：</li>
-</ul>
-<blockquote>
-<p>记录类型：CNAME</p>
-<p>主机记录：blog.cookeem.com</p>
-<p>记录值：cookeem.github.io</p>
-<p>TTL：10分钟</p>
-</blockquote>
-<h3>新建页面</h3>
-<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ hexo new &quot;My New Post&quot;</div></pre></td></tr></table></figure></p>
-<h3>发布更新到GitHub</h3>
-<ul>
-<li>
-<p>发布更新到GitHub
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ hexo clean &amp;&amp; hexo deploy -g</div></pre></td></tr></table></figure></p>
-</li>
-<li>
-<p>访问你的域名进行验证：<code>http://blog.cookeem.com</code></p>
-</li>
-</ul>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ firewall-cmd --get-services</div><div class="line">RH-Satellite-6 amanda-client amanda-k5-client bacula bacula-client ceph ceph-mon dhcp dhcpv6 dhcpv6-client dns docker-registry dropbox-lansync freeipa-ldap freeipa-ldaps freeipa-replication ftp high-availability http https imap imaps ipp ipp-client ipsec iscsi-target kadmin kerberos kpasswd ldap ldaps libvirt libvirt-tls mdns mosh mountd ms-wbt mysql nfs ntp openvpn pmcd pmproxy pmwebapi pmwebapis pop3 pop3s postgresql privoxy proxy-dhcp ptp pulseaudio puppetmaster radius rpc-bind rsyncd samba samba-client sane smtp smtps snmp snmptrap squid ssh synergy syslog syslog-tls telnet tftp tftp-client tinc tor-socks transmission-client vdsm vnc-server wbem-https xmpp-bosh xmpp-client xmpp-local xmpp-server</div></pre></td></tr></table></figure></p>
+<h3>查看特定的service定义文件</h3>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ cat /usr/lib/firewalld/services/ssh.xml </div><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;service&gt;</div><div class="line">  &lt;short&gt;SSH&lt;/short&gt;</div><div class="line">  &lt;description&gt;Secure Shell (SSH) is a protocol for logging into and executing commands on remote machines. It provides secure encrypted communications. If you plan on accessing your machine remotely via SSH over a firewalled interface, enable this option. You need the openssh-server package installed for this option to be useful.&lt;/description&gt;</div><div class="line">  &lt;port protocol=&quot;tcp&quot; port=&quot;22&quot;/&gt;</div><div class="line">&lt;/service&gt;</div></pre></td></tr></table></figure></p>
 
                 <hr>
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2017/07/18/CentOS7-firewalld-usage/" data-toggle="tooltip" data-placement="top"
-                           title="CentOS firewalld 设置常用命令">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2017/07/18/Mac-docker-shrink/" data-toggle="tooltip" data-placement="top"
-                           title="MacOSX下docker镜像文件压缩">Next Post &rarr;</a>
+                        <a href="/2017/07/18/Github-pages-and-hexo-build-your-blog-system/" data-toggle="tooltip" data-placement="top"
+                           title="使用Github Pages和Hexo构建你的个人博客">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -276,7 +259,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">安装Hexo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">让Hexo支持发布到Github</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">在github上创建新的repository</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">设置域名指向</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">在域名解析里边添加CNAME解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">新建页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">发布更新到GitHub</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">firewalld的启动关闭</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">firewalld的允许和禁止</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">查看firewalld的zones</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">获取默认zone，就是不设置zone参数默认对应的zone</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">获取当前活动的zones</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">永久添加http端口到public zone</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">永久删除http端口到public zone</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">永久添加8080端口到public zone</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">永久删除8080端口到public zone</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">添加删除后记得reload</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">查看配置结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">获取firewalld开放的services以及端口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">获取所有可用的zones</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">查看特定的zone状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">查看firewalld默认支持的services</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">查看特定的service定义文件</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -298,11 +281,8 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#github"
-                           title="github">github</a>
-                        
-                        <a class="tag" href="/tags/#hexo"
-                           title="hexo">hexo</a>
+                        <a class="tag" href="/tags/#centos"
+                           title="centos">centos</a>
                         
                     </div>
                 </section>
