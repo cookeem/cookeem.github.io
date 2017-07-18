@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        My new post｜曾海剑的技术博客
+        MacOSX下docker镜像文件压缩｜曾海剑的技术博客
         
     </title>
 
-    <link rel="canonical" href="http://blog.cookeem.com/2017/07/18/My-new-post/">
+    <link rel="canonical" href="http://blog.cookeem.com/2017/07/18/Mac-docker-shrink/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -144,7 +144,9 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>My new post</h1>
+                    <h1>MacOSX下docker镜像文件压缩</h1>
+                    
+                    <h2 class="subheading">MacOSX docker image files shrink</h2>
                     
                     <span class="meta">
                          作者 Haijian.Zeng
@@ -154,6 +156,9 @@
                     </span>
                     <div class="tags text-center">
                         
+                        <a class="tag" href="/tags/#docker"
+                           title="docker">docker</a>
+                        
                     </div>
                 </div>
             </div>
@@ -161,7 +166,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            My new post
+            MacOSX下docker镜像文件压缩
         </span>
     </div>
 </header>
@@ -172,7 +177,25 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                
+                <h2>MacOSX下查看docker虚拟机镜像</h2>
+<ul>
+<li>MacOSX下的docker默认使用的是HyperKit而不是Virtualbox，默认的HyperKit的虚拟机镜像文件位于：</li>
+</ul>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ ls -al ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux</div><div class="line">total 13871424</div><div class="line">drwxr-xr-x  22 cookeem  staff         748  7 17 18:32 .</div><div class="line">drwxr-xr-x  22 cookeem  staff         748  7 17 18:09 ..</div><div class="line">-rw-r--r--   1 cookeem  staff  7101349888  7 17 18:32 Docker.qcow2</div><div class="line">-rw-r--r--   1 cookeem  staff       65536  7 17 18:09 console-ring</div><div class="line">-rw-r--r--   1 cookeem  staff       65536  7 14 09:35 console-ring.0</div><div class="line">-rw-r--r--   1 cookeem  staff       65536  7 12 14:36 console-ring.1</div><div class="line">-rw-r--r--   1 cookeem  staff       65536  6 16 09:30 console-ring.10</div><div class="line">-rw-r--r--   1 cookeem  staff       65536  7  2 17:27 console-ring.2</div><div class="line">-rw-r--r--   1 cookeem  staff       65536  6 30 17:24 console-ring.3</div><div class="line">-rw-r--r--   1 cookeem  staff       65536  6 28 17:09 console-ring.4</div><div class="line">-rw-r--r--   1 cookeem  staff       65536  6 28 11:05 console-ring.5</div><div class="line">-rw-r--r--   1 cookeem  staff       65536  6 24 19:25 console-ring.6</div><div class="line">-rw-r--r--   1 cookeem  staff       65536  6 22 10:59 console-ring.7</div><div class="line">-rw-r--r--   1 cookeem  staff       65536  6 22 10:48 console-ring.8</div><div class="line">-rw-r--r--   1 cookeem  staff       65536  6 20 16:43 console-ring.9</div><div class="line">-rw-r--r--   1 cookeem  staff           0 10 21  2016 lock</div><div class="line">drwxr-xr-x  66 cookeem  staff        2244  5  9 10:00 log</div><div class="line">-rw-r--r--   1 cookeem  staff          17  7 17 18:09 mac.0</div><div class="line">-rw-r--r--   1 cookeem  staff          36 10 21  2016 nic1.uuid</div><div class="line">-rw-r--r--   1 cookeem  staff           4  7 17 18:09 pid</div><div class="line">-rw-r--r--   1 cookeem  staff       12925  7 17 18:10 syslog</div><div class="line">lrwxr-xr-x   1 cookeem  staff          12  7 17 18:09 tty -&gt; /dev/ttys005</div></pre></td></tr></table></figure></p>
+<ul>
+<li>可以通过直接删除<code>~/Library/Containers/com.docker.docker/Data/Docker.qcow2</code>释放空间</li>
+</ul>
+<hr>
+<h2>MacOSX下进行docker虚拟机空间压缩</h2>
+<ul>
+<li>MacOSX下的docker每次使用<code>docker rmi</code>都不会自动释放空间，必须借助<code>walkerlee/nsenter</code>镜像，进行虚拟机空间压缩</li>
+</ul>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">docker run --rm -it --privileged --pid=host walkerlee/nsenter -t 1 -m -u -i -n fstrim /var</div></pre></td></tr></table></figure></p>
+<ul>
+<li>运行以上命令，会遇到以下问题：fstrim: ioctl 0xc0185879 failed: Not supported的异常问题，需要运行以下命令进行修正：</li>
+</ul>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ cd ~/Library/Containers/com.docker.docker/Data/database/</div><div class="line">$ git checkout master</div><div class="line">$ git reset --hard</div><div class="line">$ mkdir -p com.docker.driver.amd64-linux/disk</div><div class="line">$ echo 262144 &gt; com.docker.driver.amd64-linux/disk/compact-after</div><div class="line">$ echo 262144 &gt; com.docker.driver.amd64-linux/disk/keep-erased</div><div class="line">$ echo -n true &gt; com.docker.driver.amd64-linux/disk/trim</div><div class="line">$ git add com.docker.driver.amd64-linux/disk/compact-after </div><div class="line">$ git add com.docker.driver.amd64-linux/disk/keep-erased </div><div class="line">$ git add com.docker.driver.amd64-linux/disk/trim </div><div class="line">$ git commit -s -m &apos;Enable on-line compaction&apos;</div></pre></td></tr></table></figure></p>
+
                 <hr>
                 
 
@@ -216,7 +239,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">MacOSX下查看docker虚拟机镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">MacOSX下进行docker虚拟机空间压缩</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -237,6 +260,9 @@
                         <a href="/tags/">FEATURED TAGS</a>
                     </h5>
                     <div class="tags">
+                        
+                        <a class="tag" href="/tags/#docker"
+                           title="docker">docker</a>
                         
                     </div>
                 </section>
